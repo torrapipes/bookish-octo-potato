@@ -3,6 +3,7 @@ package com.crud.backend.model;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,17 +16,24 @@ public class GameModel {
    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
+    @Column(name="sport")
     private String sport;
+    @Column(name="admin")
     private String admin;
+    @Column(name="place")
+    private String place;
+    @Column(name="date")
     private SimpleDateFormat date;
 
     
     // constructor
-    public GameModel(int id, String sport, String admin, SimpleDateFormat date) {
+    public GameModel(int id, String sport, String admin, String place, SimpleDateFormat date) {
         this.id = id;
         this.sport = sport;
         this.admin = admin;
+        this.place = place;
         this.date = date;
     }
 
@@ -52,6 +60,14 @@ public class GameModel {
 
     public void setAdmin(String admin) {
         this.admin = admin;
+    }
+
+    public String getPlace() {
+        return this.place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public SimpleDateFormat getDate() {
