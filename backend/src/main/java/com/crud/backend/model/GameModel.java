@@ -1,6 +1,6 @@
 package com.crud.backend.model;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "game")
@@ -16,7 +18,7 @@ public class GameModel {
    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="id", updatable = false)
     private int id;
     @Column(name="sport")
     private String sport;
@@ -24,13 +26,16 @@ public class GameModel {
     private String admin;
     @Column(name="place")
     private String place;
+    @Temporal(TemporalType.DATE)
     @Column(name="date")
-    private SimpleDateFormat date;
+    private Date date;
 
     
     // constructor
-    public GameModel(int id, String sport, String admin, String place, SimpleDateFormat date) {
-        this.id = id;
+    public GameModel() {
+
+    }
+    public GameModel(String sport, String admin, String place, Date date) {
         this.sport = sport;
         this.admin = admin;
         this.place = place;
@@ -70,11 +75,11 @@ public class GameModel {
         this.place = place;
     }
 
-    public SimpleDateFormat getDate() {
+    public Date getDate() {
         return this.date;
     }
 
-    public void setDate(SimpleDateFormat date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
