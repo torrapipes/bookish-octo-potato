@@ -1,28 +1,32 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ title }}</h1>
-    <h2>{{ msg }}</h2>
+    <div v-for="game in games" v-bind:key="game.id">
+      Sport: {{ game.sport }}
+      Admin: {{ game.admin }}
+      Place: {{ game.place }}
+      Date: {{ game.date }}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data() {
     return  {
-      title: ''
+      title: '',
+      games: ''
     }
   },
-  props: {
-    msg: String
-  },
   mounted() {
-    fetch('http://localhost:8080')
+    // list games
+    fetch('http://localhost:8080/getGames')
       .then( response => {
-        return response.text()
+        return response.json()
       })
       .then( data => {
-          this.title = data
+          this.games = data
       })
   }
 }
