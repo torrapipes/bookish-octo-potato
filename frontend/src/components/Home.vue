@@ -1,23 +1,22 @@
 <template>
-  <div>
+  <div class="container">
     <h1>{{ title }}</h1>
-    <div v-for="game in games" v-bind:key="game.id">
-      Sport: {{ game.sport }}
-      Admin: {{ game.admin }}
-      Place: {{ game.place }}
-      Date: {{ game.date }}
-    </div>
+    <Card v-for="game in games" v-bind:key="game.id" v-bind:object="game"></Card>
   </div>
 </template>
 
 <script>
+import Card from './Card.vue'
 export default {
   name: 'Home',
   data() {
     return  {
-      title: '',
+      title: 'GAMES',
       games: ''
     }
+  },
+  components: {
+    Card
   },
   mounted() {
     // list games
@@ -33,19 +32,15 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  h1 {
+    color: rgb(247, 237, 151);
+    font-size: 4rem;
+  }
 }
 </style>
