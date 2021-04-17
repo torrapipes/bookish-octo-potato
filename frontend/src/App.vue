@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <Home/>
   </div>
 </template>
@@ -16,12 +16,8 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  background: rgb(2,0,36);
+background: linear-gradient(42deg, rgba(2,0,36,1) 0%, rgba(20,2,55,1) 0%, rgba(80,9,121,1) 35%, rgba(90,4,249,1) 97%);
 }
 </style>
