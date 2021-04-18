@@ -84,7 +84,7 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log("Post response:", data)
-                        this.$emit('success', true)
+                        this.$emit('success', "Game has been created")
                     })
                     .catch(error => {
                         console.error('Erroor', error)
@@ -122,7 +122,7 @@
         }
         .button {
             margin-top: 1rem;
-            background: purple;
+            background: #5407AE;
             color: rgb(247, 242, 203);
             border: none;
             border-radius: 2rem;
@@ -132,8 +132,8 @@
             font-size: 2rem;
         }
         .button:hover {
-            background: rgb(247, 242, 203);
-            color: purple;
+            color: rgb(247, 242, 203);
+            background: #7014da;
             cursor: pointer;
         }
         .close {
