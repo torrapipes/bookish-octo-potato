@@ -6,7 +6,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button class="button close" @click="closeModal(false)">
+                                <button class="button close" @click="closeModal()">
                                     <i class="fas fa-times"/>
                                 </button>
                                 <h1 class="modal-title">Create a game</h1>
@@ -63,8 +63,8 @@
             }
         },
         methods: {
-            closeModal(value) {
-                this.$emit('closeModal', value)
+            closeModal() {
+                this.$emit('closeModal', '')
             },
             submit() {
                 // building game object
