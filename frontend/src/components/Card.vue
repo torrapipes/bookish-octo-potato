@@ -1,24 +1,32 @@
 <template>
     <div class="card">
-      <div>
-        <i v-if="object.sport == 'Soccer'" class="fas fa-futbol sport-icon"/>
-        <i v-if="object.sport == 'Basketball'" class="fas fa-basketball-ball sport-icon"/>
-        <i v-if="object.sport == 'Bowling'" class="fas fa-bowling-ball sport-icon"/>
-        <i v-if="object.sport == 'Football'" class="fas fa-football-ball sport-icon"/>
-        <i v-if="object.sport == 'Ping Pong'" class="fas fa-table-tennis sport-icon"/>
-      </div>
-      <div>
-        <p class="sport-title">{{ object.sport }}</p>
-      </div>
-      <div>
-        <img class="person-image" v-bind:src="person.picture.large"/>
-        <div class="text">
-          <span>Hello, I'm {{ person.name.first }}, join this game if you want to play {{ object.sport }} with me! </span>
+      <div class="content">
+        <div>
+          <i v-if="object.sport == 'Soccer'" class="fas fa-futbol sport-icon"/>
+          <i v-if="object.sport == 'Basketball'" class="fas fa-basketball-ball sport-icon"/>
+          <i v-if="object.sport == 'Bowling'" class="fas fa-bowling-ball sport-icon"/>
+          <i v-if="object.sport == 'Football'" class="fas fa-football-ball sport-icon"/>
+          <i v-if="object.sport == 'Ping Pong'" class="fas fa-table-tennis sport-icon"/>
         </div>
-        <!-- get name from person here -->
-        <p><i class="fas fa-clock date-icon"/>{{ object.date }}</p>
-        <p><i class="fas fa-map-marker-alt location-icon"/>{{ object.place }}</p>
-      </div>     
+        <div>
+          <p class="sport-title">{{ object.sport }}</p>
+        </div>
+        <div>
+          <img class="person-image" v-bind:src="person.picture.large"/>
+          <div class="text">
+            <span>Hello, I'm 
+              <span v-if="object.admin"> {{ object.admin }}</span>
+              <span v-else>{{ person.name.first }}</span>
+              , join this game if you want to play {{ object.sport }} with me! </span>
+          </div>
+          <!-- get name from person here -->
+          <p><i class="fas fa-clock date-icon"/>{{ object.date }}</p>
+          <p><i class="fas fa-map-marker-alt location-icon"/>{{ object.place }}</p>
+        </div> 
+      </div>
+      <div class="footer" @click="openSuccessModal('You joined the game!')">
+        <p>Join Game</p>
+      </div>    
     </div>
 </template>
 
@@ -38,9 +46,14 @@
             }
           }
         },
+        methods: {
+          openSuccessModal(value) {
+            this.$emit('showSuccessModal', value)
+          }
+        },
         mounted() {
-          // get pictures
-          fetch('https://randomuser.me/api/?inc=picture,name&noinfo')
+          // get pictures of women
+          fetch('https://randomuser.me/api/?inc=picture,name&noinfo&gender=female')
           .then(response => {
             response.json()
             .then(response => {
@@ -54,10 +67,11 @@
 
 <style lang="scss" scoped>
 .card {
+    display: flex;
+    flex-direction: column;
     width: 30rem;
     transition: transform .2s;
     margin: 3rem auto 3rem auto;
-    padding: 1rem;
     text-align: center;
     box-shadow: 10px 10px 24px -5px rgba(0,0,0,0.75);;
     border-radius: 1rem;
@@ -88,6 +102,25 @@
         border-radius: 50%;
         position: absolute;
     }
+    .content {
+      padding: 1rem;
+    }
+    .footer {
+      background: #5407AE;
+      margin-bottom: 0;
+      width: 100%;
+      width: 30rem;
+      border-radius: 0 0 1rem 1rem;
+      color: rgb(247, 242, 203);
+      font-family: 'Debug Free Trial';
+      font-size: 1.5rem;
+      box-sizing: border-box;
+    }
+     .footer:hover {
+      background: #7014da;
+      color: rgb(247, 242, 203);
+      cursor: pointer;
+    } 
 }
 .card:hover {
   transform: scale(1.1);
