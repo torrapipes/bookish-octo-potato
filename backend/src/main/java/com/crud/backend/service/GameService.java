@@ -3,6 +3,8 @@ package com.crud.backend.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javassist.bytecode.stackmap.BasicBlock.Catch;
+
 import java.util.List;
 
 import com.crud.backend.model.GameModel;
@@ -19,9 +21,16 @@ public class GameService {
     }
 
     public GameModel save(GameModel game) {
-        gameRepository.save(game);
-        return game;
+        return gameRepository.save(game);
     }
+
+    public void delete(int id) {
+        try {
+            gameRepository.deleteById(id);
+        } catch (Error error) {
+            System.out.println("There has been an error deleting the game");
+        }
+    } 
 
 
 }
