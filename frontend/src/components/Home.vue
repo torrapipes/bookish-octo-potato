@@ -4,9 +4,9 @@
     <button @click="showModal = true">
       <h2>NEW GAME</h2>
     </button>
-    <Modal v-if="showModal" @success="showSuccessModal = true" @closeModal="showModal = false"></Modal>
-    <SuccessModal></SuccessModal>
-    <Card v-for="game in games" v-bind:key="game.id" v-bind:object="game"></Card>
+    <Modal v-if="showModal" @success="openSuccessModal" @closeModal="showModal = false"></Modal>
+    <SuccessModal v-bind:message="successModalMessage" v-if="showSuccessModal" @closeModal="showModal = false" @closeModalSuccess="showSuccessModal = false"></SuccessModal>
+    <Card @showSuccessModal="openSuccessModal" @closeSuccessModal="showSuccessModal = false" v-for="game in games" v-bind:key="game.id" v-bind:object="game"></Card>
   </div>
 </template>
 
@@ -22,13 +22,20 @@ export default {
       title: 'GAMES',
       games: '',
       showModal: false,
-      showSuccessModal: false
+      showSuccessModal: false,
+      successModalMessage: ''
     }
   },
   components: {
     Card,
     Modal,
     SuccessModal
+  },
+  methods: {
+    openSuccessModal(value) {
+      this.successModalMessage = value;
+      this.showSuccessModal = true;
+    }
   },
   mounted() {
     // list games
