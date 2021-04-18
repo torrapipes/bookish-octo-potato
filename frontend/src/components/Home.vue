@@ -4,9 +4,9 @@
     <button @click="showModal = true">
       <h2>NEW GAME</h2>
     </button>
-    <Modal v-if="showModal" @success="openSuccessModal" @closeModal="showModal = false"></Modal>
-    <SuccessModal v-bind:message="successModalMessage" v-if="showSuccessModal" @closeModal="showModal = false" @closeModalSuccess="showSuccessModal = false"></SuccessModal>
-    <Card @showSuccessModal="openSuccessModal" @closeSuccessModal="showSuccessModal = false" v-for="game in games" v-bind:key="game.id" v-bind:object="game"></Card>
+    <Modal v-if="showModal" @success="openAlertModal" @closeModal="closeModal" :game="game"></Modal>
+    <SuccessModal v-bind:message="alertModalMessage" v-if="showAlertModal" @closeModal="showModal = false" @closeModalSuccess="showAlertModal = false"></SuccessModal>
+    <Card @showModal="openModal" @showAlert="openAlertModal" @showSuccessModal="openAlertModal" @closeSuccessModal="showAlertModal = false" @fetchGames="fetchGames" v-for="game in games" v-bind:key="game.id" v-bind:object="game"></Card>
   </div>
 </template>
 
@@ -22,8 +22,16 @@ export default {
       title: 'GAMES',
       games: '',
       showModal: false,
-      showSuccessModal: false,
-      successModalMessage: ''
+      showAlertModal: false,
+      alertModalMessage: '',
+      game: {
+        sport: '',
+        admin: '',
+        place: '',
+        date: '',
+        id: ''
+
+      }
     }
   },
   components: {
@@ -32,9 +40,26 @@ export default {
     SuccessModal
   },
   methods: {
-    openSuccessModal(value) {
-      this.successModalMessage = value;
-      this.showSuccessModal = true;
+    openAlertModal(value) {
+      this.alertModalMessage = value;
+      this.showAlertModal = true;
+    },
+    openModal(value) {
+      this.game = value
+      this.showModal = true
+    },
+    closeModal() {
+      this.showModal = false;
+      this.game = ''
+    },
+    fetchGames() {
+      fetch('http://localhost:8080/getGames')
+      .then( response => {
+        return response.json()
+      })
+      .then( data => {
+          this.games = data
+      })
     }
   },
   mounted() {
