@@ -18,5 +18,10 @@ public class GameService {
         return (List<GameModel>) gameRepository.findAll();
     }
 
+    public GameModel save(GameModel game) {
+        gameRepository.save(game);
+        return game;
+    }
+
 
 }

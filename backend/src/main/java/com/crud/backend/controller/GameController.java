@@ -30,9 +30,8 @@ public class GameController {
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @CrossOrigin
-    public String createGame(@RequestBody GameModel game) {
-        gameService.save(game);
-        return "hi";
+    public GameModel createGame(@RequestBody GameModel game) {        
+        return gameService.save(game);
     }
 
     
