@@ -1,6 +1,10 @@
 <template>
     <div class="card">
       <div class="content">
+        <div class="icons">
+          <i class="fas fa-edit" @click="edit"></i>
+          <i class="fas fa-trash-alt" @click="remove"></i>
+        </div>
         <div>
           <i v-if="object.sport == 'Soccer'" class="fas fa-futbol sport-icon"/>
           <i v-if="object.sport == 'Basketball'" class="fas fa-basketball-ball sport-icon"/>
@@ -16,8 +20,7 @@
           <div class="text">
             <span>Hello, I'm 
               <span v-if="object.admin"> {{ object.admin }}</span>
-              <span v-else>{{ person.name.first }}</span>
-              , join this game if you want to play {{ object.sport }} with me! </span>
+              <span v-else>{{ person.name.first }}</span>, join this game if you want to play {{ object.sport }} with me! </span>
           </div>
           <!-- get name from person here -->
           <p><i class="fas fa-clock date-icon"/>{{ object.date }}</p>
@@ -49,6 +52,32 @@
         methods: {
           openSuccessModal(value) {
             this.$emit('showSuccessModal', value)
+          },
+          edit() {
+            let game = {
+              sport: this.object.sport,
+              admin: this.object.admin,
+              place: this.object.place,
+              date: this.object.date,
+              id: this.object.id
+            }
+            this.$emit('showModal', game)
+          },
+          remove() {
+            let gameId = this.object.id
+            const requestOptions = {
+              method: "DELETE"
+            };
+            fetch("http://localhost:8080/deleteGame/" + gameId, requestOptions)
+                .then(data => {
+                    console.log("DELETE response:", data)
+                    this.$emit('fetchGames')
+                    this.$emit('showAlert', "Game has been deleted")
+                })
+                .catch(error => {
+                    console.error('Erroor', error)
+                }) 
+            this.$emit('showAlertModal', 'Game Removed')
           }
         },
         mounted() {
@@ -58,7 +87,6 @@
             response.json()
             .then(response => {
               this.person = response.results[0]
-              console.log(this.person)
             })
           })
         }
@@ -107,20 +135,26 @@
     }
     .footer {
       background: #5407AE;
-      margin-bottom: 0;
       width: 100%;
-      width: 30rem;
       border-radius: 0 0 1rem 1rem;
       color: rgb(247, 242, 203);
       font-family: 'Debug Free Trial';
       font-size: 1.5rem;
-      box-sizing: border-box;
     }
      .footer:hover {
       background: #7014da;
       color: rgb(247, 242, 203);
       cursor: pointer;
     } 
+    .icons {
+      display: flex;
+      flex-direction: row-reverse;
+      i {
+        margin: 0 .5rem 0 0;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+    }
 }
 .card:hover {
   transform: scale(1.1);
@@ -131,6 +165,12 @@
     .person-image {
       margin: -9rem 0rem 0rem -9.0rem;
       width: 100px;
+    }
+    .footer {
+      width: 15rem;
+      margin-bottom: -2rem;
+      font-size: 2rem;
+      margin-top: -2rem;
     }
   }
 
