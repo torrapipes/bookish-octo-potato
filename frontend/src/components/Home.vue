@@ -4,7 +4,7 @@
     <button @click="showModal = true">
       <h2>NEW GAME</h2>
     </button>
-    <Modal v-if="showModal" @success="openAlertModal" @closeModal="closeModal" :game="game"></Modal>
+    <Modal v-if="showModal" @success="openAlertModal" @closeModal="closeModal" @fetchGames="fetchGames" :game="game"></Modal>
     <SuccessModal v-bind:message="alertModalMessage" v-if="showAlertModal" @closeModal="showModal = false" @closeModalSuccess="showAlertModal = false"></SuccessModal>
     <Card @showModal="openModal" @showAlert="openAlertModal" @showSuccessModal="openAlertModal" @closeSuccessModal="showAlertModal = false" @fetchGames="fetchGames" v-for="game in games" v-bind:key="game.id" v-bind:object="game"></Card>
   </div>

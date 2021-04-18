@@ -110,6 +110,7 @@
                     .then(data => {
                         console.log("PUT response:", data)
                         this.$emit('success', "Game has been updated")
+                        this.$emit('fetchGames')
                     })
                     .catch(error => {
                         console.error('Erroor', error)
