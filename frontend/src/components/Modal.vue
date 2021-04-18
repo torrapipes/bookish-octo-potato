@@ -6,7 +6,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button class="button close" @click="closeModal()">
+                                <button class="button close" @click="closeModal">
                                     <i class="fas fa-times"/>
                                 </button>
                                 <h1 class="modal-title">Create a game</h1>
@@ -40,7 +40,8 @@
                                     </form>
                                 </div>
                                 <div align="center">
-                                    <input class="button" @click="submit()" value="POST GAME">
+                                    <input v-if="game.id == ''" class="button" @click="submit" value="POST GAME">
+                                    <input v-else class="button" @click="update" value="UPDATE GAME">
                                 </div>
                             </div>
                         </div>
@@ -54,17 +55,18 @@
 <script>
     export default {
         name: 'Modal',
+        props: ['game'],
         data() {
             return {
-                admin: '',
-                sport: 'Choose sport',
-                place: '',
-                date: ''
+                admin: this.game.admin,
+                sport: this.game.sport,
+                place: this.game.place,
+                date: this.game.date            
             }
         },
         methods: {
             closeModal() {
-                this.$emit('closeModal', '')
+                this.$emit('closeModal')
             },
             submit() {
                 // building game object
@@ -89,6 +91,30 @@
                     .catch(error => {
                         console.error('Erroor', error)
                     }) 
+            },
+            update() {
+                let game = {
+                    'admin': this.admin,
+                    'sport': this.sport,
+                    'place': this.place,
+                    'date': this.date,
+                    'id': this.game.id
+                }
+                const requestOptions = {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(game)
+                };
+                fetch("http://localhost:8080/updateGame", requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("PUT response:", data)
+                        this.$emit('success', "Game has been updated")
+                    })
+                    .catch(error => {
+                        console.error('Erroor', error)
+                    }) 
+
             }
         }
     }
