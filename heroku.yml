@@ -1,4 +1,4 @@
 build:
   docker:
-    backend-docker: docker-composer.yml
-    frontend-docker: docker-composer.yml
+    backend: backend/Dockerfile
+    frontend: frontend/Dockerfile
