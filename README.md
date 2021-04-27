@@ -20,10 +20,10 @@ This is an app with a CRUD made using Vue, Springboot, JPA and Docker.
 ## Git Commits
 These are the keywords I will use when commiting changes (based on conventional commits):
 
-fix: must be used when the commit represents the fix of an error of the code
-feat: must be used when the commit represents a new feature added to the application
-docs: must be used when the commit represents a change in the documentation of the application
-refactor: must be used when the commit represents an improvement in the code of the application
+fix: must be used when the commit represents the fix of an error of the code  
+feat: must be used when the commit represents a new feature added to the application  
+docs: must be used when the commit represents a change in the documentation of the application  
+refactor: must be used when the commit represents an improvement in the code of the application  
 style: must be used when the commit represents a change in the design of the website or a change that does not affect the code like deleting white spaces, formatting, adding dots, etc.
 
 
